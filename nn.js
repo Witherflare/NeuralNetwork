@@ -84,5 +84,39 @@ class NeuralNetwork {
   }
 }
 
-let nn = new NeuralNetwork(2, 2, 1); // Create a neural network with 2 input nodes, 2 hidden nodes, and 1 output node
-nn.train([1, 0], [ 1 ]); // Feed data into the network and recieve an output
+// Simple XOR example
+// let training_data = [
+//   {
+//     inputs: [0, 0, 1],
+//     targets: [0]
+//   },
+//   {
+//     inputs: [0, 1, 1],
+//     targets: [1]
+//   },
+//   {
+//     inputs: [1, 0, 1],
+//     targets: [1]
+//   },
+//   {
+//     inputs: [0, 1, 0],
+//     targets: [1]
+//   },
+//   {
+//     inputs: [1, 1, 1],
+//     targets: [0]
+//   },
+//   {
+//     inputs: [0, 0, 0],
+//     targets: [0]
+//   },
+// ]
+
+// let network = new NeuralNetwork(3, 4, 1);
+
+// for (var i = 0; i < 50000; i++) {
+//   let data = training_data[Math.floor(Math.random() * training_data.length)];
+//   network.train(data.inputs, data.targets);
+// }
+
+// console.log(network.run([1, 1, 0]))
