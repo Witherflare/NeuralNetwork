@@ -32,10 +32,14 @@ class NeuralNetwork {
     return output.toArray(); // Convert the matrix into an array
   }
 
-  train(inputs, targets) { // Train the neural network with an input array and an expected output array
-    
+  train(raw_input, expected) { // Train the neural network with an input array and an expected output array
+    let output = this.run(raw_input); // Get the output of the neural network
+    output = Matrix.fromArray(output); // Convert the output array into a matrix
+    expected = Matrix.fromArray(expected); // Convert the expected array into a matrix
+    let error = expected.subtract(output) // Calculate how far off the output is from the expected output (error = expected - output)
+    return error.toArray(); // Convert the matrix into an array
   }
 }
 
 let nn = new NeuralNetwork(2, 2, 1); // Create a neural network with 2 input nodes, 2 hidden nodes, and 1 output node
-console.log(nn.feedForward([1, 0]).join(", ")); // Feed data into the network and recieve an output
+console.log(nn.train([1, 0], [0, 1]).join(", ")); // Feed data into the network and recieve an output

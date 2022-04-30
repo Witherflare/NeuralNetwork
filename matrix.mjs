@@ -60,6 +60,25 @@ export class Matrix {
     }
   }
 
+  // Either subtracts a scalar from a matrix or does element-wise subtraction (subtracts a matrix from a matrix)
+  subtract (n) {
+    if (n instanceof Matrix) {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          this.data[i][j] = this.data[i][j] - n.data[i][j];
+        }
+      }
+      return this;
+    } else {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          this.data[i][j] = this.data[i][j] - n;
+        }
+      }
+      return this;
+    }
+  }
+
   randomize () {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
