@@ -9,7 +9,7 @@ function dsigmoid (y) {
   return y * (1 - y);
 }
 
-class NeuralNetwork {
+export default class NeuralNetwork {
   constructor(numI, numH, numO) { // Initialize our neural network
     this.input_nodes = numI; // Number of input nodes in the network
     this.hidden_nodes = numH; // Number of hidden nodes (also called processors or neurons) in the network
