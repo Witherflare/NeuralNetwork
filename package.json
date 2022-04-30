@@ -1,0 +1,23 @@
+{
+  "name": "neuralnetwork",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Simple neural network library",
+  "main": "nn.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Witherflare/NeuralNetwork.git"
+  },
+  "keywords": [
+    "neural"
+  ],
+  "author": "Witherflare",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Witherflare/NeuralNetwork/issues"
+  },
+  "homepage": "https://github.com/Witherflare/NeuralNetwork#readme"
+}

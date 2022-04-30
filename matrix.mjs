@@ -1,4 +1,4 @@
-class Matrix {
+export class Matrix {
   constructor (rows, cols) {
     this.rows = rows;
     this.cols = cols;
@@ -44,32 +44,29 @@ class Matrix {
   // Either adds a scalar to a matrix or does element-wise addition (adds a matrix to a matrix)
   add (n) {
     if (n instanceof Matrix) {
-      let result = new Matrix(this.rows, this.cols);
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.cols; j++) {
-          result.data[i][j] = this.data[i][j] + n.data[i][j];
+          this.data[i][j] = this.data[i][j] + n.data[i][j];
         }
       }
-      return result;
+      return this;
     } else {
-      let result = new Matrix(this.rows, this.cols);
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.cols; j++) {
-          result.data[i][j] = this.data[i][j] + n;
+          this.data[i][j] = this.data[i][j] + n;
         }
       }
-      return result;
+      return this;
     }
   }
 
   randomize () {
-    let result = new Matrix(this.rows, this.cols);
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        result.data[i][j] = Math.floor(Math.random() * 10)
+        this.data[i][j] = Math.random() * 2 - 1;
       }
     }
-    return result;
+    return this;
   }
 
   transpose () {
@@ -82,15 +79,32 @@ class Matrix {
     return result;
   }
 
-  // map applies a function to every element of the matrix
-  map (func) {
-    let result = new Matrix(this.rows, this.cols);
+  static fromArray (arr) {
+    let matrix = new Matrix(arr.length, 1);
+    for (let i = 0; i < arr.length; i++) {
+      matrix.data[i][0] = arr[i];
+    }
+    return matrix;
+  }
+
+  toArray () {
+    let arr = [];
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        result.data[i][j] = func(this.data[i][j]);
+        arr.push(this.data[i][j]);
       }
     }
-    return result;
+    return arr;
+  }
+
+  // map applies a function to every element of the matrix
+  map (func) {
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        this.data[i][j] = func(this.data[i][j]);
+      }
+    }
+    return this;
   }
 
   // print the matrix
@@ -98,9 +112,3 @@ class Matrix {
     console.table(this.data);
   }
 }
-
-let a = new Matrix(3, 2).randomize()
-let b = new Matrix(2, 2).randomize()
-a.print()
-b.print()
-Matrix.multiply(a, b).print()
