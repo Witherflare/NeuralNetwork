@@ -1,4 +1,4 @@
-import { Matrix } from './matrix.mjs';
+import { Matrix } from './matrix.js';
 
 function sigmoid (x) {
   return 1 / (1 + Math.exp(-x)); // Sigmoid function (https://en.wikipedia.org/wiki/Sigmoid_function)
