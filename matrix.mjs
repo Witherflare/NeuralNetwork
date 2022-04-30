@@ -14,7 +14,7 @@ export class Matrix {
   static multiply (a, b) {
     // Matrix product
     if (a.cols !== b.rows) {
-      throw new Error('Columns of A must match rows of B.');
+      throw new Error(`Columns of A (${a.cols}) must match rows of B (${b.rows}).`);
     }
     let result = new Matrix(a.rows, b.cols);
     for (let i = 0; i < result.rows; i++) {
@@ -31,14 +31,22 @@ export class Matrix {
   }
 
   multiply (n) {
-    // Scalar product
-    let result = new Matrix(this.rows, this.cols);
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        result.data[i][j] = this.data[i][j] * n;
+    if (n instanceof Matrix) {
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          this.data[i][j] *= n.data[i][j];
+        }
       }
+    } else {
+      // Scalar product
+      let result = new Matrix(this.rows, this.cols);
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          result.data[i][j] = this.data[i][j] * n;
+        }
+      }
+      return result;
     }
-    return result;
   }
 
   // Either adds a scalar to a matrix or does element-wise addition (adds a matrix to a matrix)
@@ -60,23 +68,14 @@ export class Matrix {
     }
   }
 
-  // Either subtracts a scalar from a matrix or does element-wise subtraction (subtracts a matrix from a matrix)
-  subtract (n) {
-    if (n instanceof Matrix) {
-      for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.cols; j++) {
-          this.data[i][j] = this.data[i][j] - n.data[i][j];
-        }
+  static subtract (a, b) {
+    var result = new Matrix(a.rows, a.cols);
+    for (var i = 0; i < result.rows; i++) {
+      for (var j = 0; j < result.cols; j++) {
+        result.data[i][j] = a.data[i][j] - b.data[i][j];
       }
-      return this;
-    } else {
-      for (let i = 0; i < this.rows; i++) {
-        for (let j = 0; j < this.cols; j++) {
-          this.data[i][j] = this.data[i][j] - n;
-        }
-      }
-      return this;
     }
+    return result;
   }
 
   randomize () {
@@ -88,11 +87,11 @@ export class Matrix {
     return this;
   }
 
-  transpose () {
-    let result = new Matrix(this.cols, this.rows);
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        result.data[j][i] = this.data[i][j];
+  static transpose (a) {
+    let result = new Matrix(a.cols, a.rows);
+    for (let i = 0; i < a.rows; i++) {
+      for (let j = 0; j < a.cols; j++) {
+        result.data[j][i] = a.data[i][j];
       }
     }
     return result;
@@ -124,6 +123,15 @@ export class Matrix {
       }
     }
     return this;
+  }
+
+  static map (a, func) {
+    for (let i = 0; i < a.rows; i++) {
+      for (let j = 0; j < a.cols; j++) {
+        a.data[i][j] = func(a.data[i][j]);
+      }
+    }
+    return a;
   }
 
   // print the matrix
