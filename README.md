@@ -1,5 +1,5 @@
 # NeuralNetwork
-This is a neural network library for node.js
+This is a neural network library for node.js & ct
 
 I tried commenting what was going on as well as possible to make understanding what's going on in the code easier.
 
