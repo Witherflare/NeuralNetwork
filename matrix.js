@@ -11,6 +11,13 @@ export class Matrix {
     }
   }
 
+  // take json data and turn it into a matrix
+  static fromJSON (json) {
+    const matrix = new Matrix(json.rows, json.cols);
+    matrix.data = json.data;
+    return matrix;
+  }
+
   static multiply (a, b) {
     // Matrix product
     if (a.cols !== b.rows) {
@@ -66,6 +73,17 @@ export class Matrix {
       }
       return this;
     }
+  }
+
+  // turn matrix into a scalar by adding all the values
+  static sum (a) {
+    let sum = 0;
+    for (let i = 0; i < a.rows; i++) {
+      for (let j = 0; j < a.cols; j++) {
+        sum += a.data[i][j];
+      }
+    }
+    return sum;
   }
 
   static subtract (a, b) {
