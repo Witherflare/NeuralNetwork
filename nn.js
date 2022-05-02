@@ -38,7 +38,8 @@ export default class NeuralNetwork {
   a_derivative(x) {
     switch (this.activation) {
       case 'sigmoid':
-        return this.a(x) * (1 - this.a(x)); // Derivative of the sigmoid function (s'(x) = s(x) * (1 - s(x)))
+        x = this.a(x);
+        return x * (1 - x); // Derivative of the sigmoid function (s'(x) = s(x) * (1 - s(x)))
       case 'tanh':
         return 1 - this.a(x) * this.a(x); // Derivative of the hyperbolic tangent function (tanh'(x) = 1 - tanh(x)^2)
       case 'relu':
@@ -86,22 +87,23 @@ export default class NeuralNetwork {
     let input = Matrix.fromArray(raw_inputs); // Convert the input array into a matrix
     let hidden = Matrix.multiply(this.weights_ih, input); // Get the weighted sum for the hidden layer (matrix)
     hidden.add(this.bias_h); // Add the bias to the weighted sum (matrix)
-    let hidden_gradients = Matrix.map(hidden, this.a_derivative); // Map the outputs through the derivative of the sigmoid function (we'll use this later)
+    let hidden_gradients = hidden; // Map the outputs through the derivative of the activation function (we'll use this later)
     hidden.map(this.a); // Apply the activation function to the weighted sum (matrix)
     let outputs = Matrix.multiply(this.weights_ho, hidden); // Get the weighted sum for the output layer (matrix)
     outputs.add(this.bias_o); // Add the bias to the weighted sum (matrix)
-    let gradients = Matrix.map(outputs, this.a_derivative); // Map the outputs through the derivative of the sigmoid function (we'll use this later)
+    let gradients = outputs; // Map the outputs through the derivative of the activation function (we'll use this later)
     outputs.map(this.a) // Apply the activation function to the weighted sum (matrix)
 
     expecteds = Matrix.fromArray(expecteds); // Convert the expected array into a matrix
     let output_errors = Matrix.subtract(expecteds, outputs) // Calculate how far off the output is from the expected output (error = expected - output)
-    
+
     // Now, we need to find the errors for the hidden layer.
     // This can be done by multiplying the errors by the transpose (flip) of the weights_ho matrix.
     // This will give us the errors for the hidden layer.
     let hidden_errors = Matrix.multiply(Matrix.transpose(this.weights_ho), output_errors); // Multiply the transpose of the weights_ho matrix by the errors (matrix)
     
     // lr * E * s'(h) * x (here, we're not multiplying by x, as we're only trying to find the gradient h-o)
+    gradients.map(this.a_derivative);
     gradients.multiply(output_errors);
     gradients.multiply(this.learning_rate);
 
@@ -110,6 +112,7 @@ export default class NeuralNetwork {
     let weight_ho_deltas = Matrix.multiply(gradients, hidden_T); // Multiply the transpose of the hidden layer by the gradient (matrix)
 
     // Repeat the process for i-h weights
+    hidden_gradients.map(this.a_derivative); // Map the outputs through the derivative of the activation function
     hidden_gradients.multiply(hidden_errors);
     hidden_gradients.multiply(this.learning_rate);
 
@@ -153,11 +156,11 @@ let training_data = [
   },
 ]
 
-let network = new NeuralNetwork(3, 3, 1, 'sigmoid');
+let network = new NeuralNetwork(3, 4, 1, 'sigmoid');
 
-for (var i = 0; i < 100000; i++) {
+for (var i = 0; i < 300000; i++) {
   let data = training_data[Math.floor(Math.random() * training_data.length)];
   network.train(data.inputs, data.output);
 }
 
-console.log(network.run([1, 0, 0]));
+console.log(network.run([0, 0, 0]));
