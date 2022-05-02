@@ -129,38 +129,38 @@ export default class NeuralNetwork {
   }
 }
 
-let training_data = [
-  {
-    inputs: [0, 0, 1],
-    output: [0]
-  },
-  {
-    inputs: [0, 1, 1],
-    output: [1]
-  },
-  {
-    inputs: [1, 0, 1],
-    output: [1]
-  },
-  {
-    inputs: [0, 1, 0],
-    output: [1]
-  },
-  {
-    inputs: [1, 1, 1],
-    output: [0]
-  },
-  {
-    inputs: [0, 0, 0],
-    output: [0]
-  },
-]
+// let training_data = [
+//   {
+//     inputs: [0, 0, 1],
+//     output: [0]
+//   },
+//   {
+//     inputs: [0, 1, 1],
+//     output: [1]
+//   },
+//   {
+//     inputs: [1, 0, 1],
+//     output: [1]
+//   },
+//   {
+//     inputs: [0, 1, 0],
+//     output: [1]
+//   },
+//   {
+//     inputs: [1, 1, 1],
+//     output: [0]
+//   },
+//   {
+//     inputs: [0, 0, 0],
+//     output: [0]
+//   },
+// ]
 
-let network = new NeuralNetwork(3, 4, 1, 'sigmoid');
+// let network = new NeuralNetwork(3, 4, 1, 'sigmoid');
 
-for (var i = 0; i < 300000; i++) {
-  let data = training_data[Math.floor(Math.random() * training_data.length)];
-  network.train(data.inputs, data.output);
-}
+// for (var i = 0; i < 300000; i++) {
+//   let data = training_data[Math.floor(Math.random() * training_data.length)];
+//   network.train(data.inputs, data.output);
+// }
 
-console.log(network.run([0, 0, 0]));
+// console.log(network.run([0, 0, 0]));
